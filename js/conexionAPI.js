@@ -7,13 +7,13 @@ async function listarVideos(){
     return conexionConvertida
 } 
 
-async function crearVideo(){
+async function enviarVideo(titulo,descripcion,url,imagen){
     const conexion = await fetch('http://localhost:3001/videos',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({ //convierte el objeto enviado al body en una cadena de texto.
             titulo:titulo,
-            descripcion:descripcion,
+            descripcion:`${descripcion} mil visualizaciones`,
             url:url,
             imagen:imagen
         })
@@ -22,8 +22,14 @@ async function crearVideo(){
     return conexionConvertida;
 }
 
+async function buscarVideos(palabrasClave){
+    const conexion = await fetch(`http://localhost:3001/videos?q=${palabrasClave}`);
+    const conexionConvertida = conexion.json();
+    return conexionConvertida;
+}
+
 export const conexionAPI={
-    listarVideos,crearVideo
+    listarVideos,enviarVideo,buscarVideos
 }
 
 //se llama a la función para que ocurra.
